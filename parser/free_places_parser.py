@@ -14,11 +14,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 # Configure proxy for OpenAI
 proxy_url = "http://45.140.143.77:18080"
 proxies = {
-    "http://": proxy_url,
-    "https://": proxy_url
+    "http": proxy_url,
+    "https": proxy_url
 }
 
-http_client = httpx.Client(proxies=proxies)
+http_client = httpx.Client(transport=httpx.HTTPTransport(proxy=httpx.Proxy(url=proxy_url)))
+
 
 client = OpenAI(
     api_key=os.getenv("GPT_TOKEN"),
